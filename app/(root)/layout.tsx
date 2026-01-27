@@ -1,4 +1,5 @@
 import Header from "@/components/shared/header/Header";
+import Footer from "@/components/Footer";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -8,6 +9,7 @@ export default function RootLayout({
     <div className="h-screen flex flex-col">
       <Header />
       <main className="flex-1 wrapper">{children}</main>
+      <Footer/>
     </div>
   );
 }
