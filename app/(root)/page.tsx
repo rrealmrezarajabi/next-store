@@ -1,7 +1,13 @@
+import sampleData from "@/db/sample-data";
+import ProductList from "@/components/shared/product/ProductList";
 export default function Home() {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <>
+      <ProductList
+        limit={4}
+        products={sampleData.products}
+        title="Newest Arrivals "
+      />
+    </>
   );
 }
