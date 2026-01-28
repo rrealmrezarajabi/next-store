@@ -1,14 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Product } from "@/types/product";
+import ProductPrice from "./ProductPrice";
+import { Product } from "@/types/product";
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
     <Link
       href={`/product/${product.slug}`}
-      className="group block overflow-hidden rounded-xl border border-black/10 bg-white transition hover:shadow-md dark:border-white/10 dark:bg-black"
+      className="group flex h-full flex-col overflow-hidden rounded-xl border border-black/10 bg-white transition hover:shadow-md dark:border-white/10 dark:bg-black"
     >
-      <div className="relative aspect-square w-full bg-black/5 dark:bg-white/5">
+      <div className="relative aspect-square w-full overflow-hidden bg-black/5 dark:bg-white/5">
         <Image
           src={product.images?.[0] ?? "/images/placeholder.png"}
           alt={product.name}
@@ -18,23 +19,22 @@ const ProductCard = ({ product }: { product: Product }) => {
         />
       </div>
 
-      <div className="space-y-2 p-4">
+      <div className="flex flex-1 flex-col p-4">
         <p className="text-xs uppercase tracking-wide text-black/60 dark:text-white/60">
           {product.brand}
         </p>
 
-        <h3 className="line-clamp-2 text-sm font-semibold text-black dark:text-white">
+        <h3 className="mt-1 line-clamp-2 text-sm font-semibold text-black dark:text-white">
           {product.name}
         </h3>
-        <div className="flex justify-between mt-5">
+
+        <div className="mt-auto flex items-center justify-between pt-3">
           <div className="flex items-center gap-1 text-sm text-black/80 dark:text-white/80">
             <span>★</span>
             <span className="font-medium">{product.rating.toFixed(1)}</span>
           </div>
 
-          <p className="text-sm font-bold text-black dark:text-white">
-            ${product.price.toFixed(2)}
-          </p>
+          <ProductPrice className="text-green-600" value={Number(product.price)} />
         </div>
       </div>
     </Link>
