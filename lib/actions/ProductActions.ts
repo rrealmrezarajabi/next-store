@@ -2,27 +2,24 @@
 
 import { prisma } from "@/lib/prisma";
 import type { Product } from "@/types/product";
+import { prismaProductToProduct } from "@/lib/utils/product";
+import { LATEST_PRODUCTS_LIMIT } from "../constants";
 
 export async function getLatestProducts(): Promise<Product[]> {
   const data = await prisma.product.findMany({
-    take: 4,
+    take: LATEST_PRODUCTS_LIMIT,
     orderBy: { createdAt: "desc" },
   });
 
-  return data.map((p) => ({
-    id: p.id,
-    name: p.name,
-    slug: p.slug,
-    category: p.category,
-    images: p.images,
-    brand: p.brand,
-    description: p.description,
-    stock: p.stock,
-    price: p.price.toNumber(),
-    rating: p.rating.toNumber(),
-    numReviews: p.numReviews,
-    isFeatured: p.isFeatured,
-    banner: p.banner,
-    createdAt: p.createdAt.toISOString(),
-  }));
+  return data.map(prismaProductToProduct);
+}
+
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+  const product = await prisma.product.findFirst({
+    where: { slug: slug },
+  });
+
+  if (!product) return null;
+
+  return prismaProductToProduct(product);
 }
