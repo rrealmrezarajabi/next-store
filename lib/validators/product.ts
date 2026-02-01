@@ -20,3 +20,4 @@ export const productSchema = z.object({
 // استخراج type از schema
 export type Product = z.infer<typeof productSchema>;
 
+
